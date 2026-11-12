@@ -4,6 +4,8 @@ import { AppService } from './app.service.js';
 import { HealthModule } from './health/health.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { UsersModule } from './users/users.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
   imports: [
@@ -11,7 +13,9 @@ import { PrismaModule } from './prisma/prisma.module.js';
       isGlobal: true,
     }),
     HealthModule,
-    PrismaModule
+    PrismaModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
