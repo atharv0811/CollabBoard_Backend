@@ -5,7 +5,12 @@ import { Prisma } from '../generated/prisma/client.js';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let prisma: { user: { create: ReturnType<typeof vi.fn>; findUnique: ReturnType<typeof vi.fn> } };
+  let prisma: {
+    user: {
+      create: ReturnType<typeof vi.fn>;
+      findUnique: ReturnType<typeof vi.fn>;
+    };
+  };
 
   const safeSelect = {
     id: true,
@@ -22,7 +27,11 @@ describe('UsersService', () => {
   });
 
   describe('createUser', () => {
-    const data = { name: 'John', email: 'john@example.com', passwordHash: 'hashed' };
+    const data = {
+      name: 'John',
+      email: 'john@example.com',
+      passwordHash: 'hashed',
+    };
 
     it('saves passwordHash and selects only safe fields', async () => {
       const user = { id: 1, name: 'John', email: 'john@example.com' };
@@ -30,7 +39,11 @@ describe('UsersService', () => {
 
       await expect(service.createUser(data)).resolves.toBe(user);
       expect(prisma.user.create).toHaveBeenCalledWith({
-        data: { name: 'John', email: 'john@example.com', passwordHash: 'hashed' },
+        data: {
+          name: 'John',
+          email: 'john@example.com',
+          passwordHash: 'hashed',
+        },
         select: safeSelect,
       });
       expect(safeSelect).not.toHaveProperty('passwordHash');
@@ -44,7 +57,9 @@ describe('UsersService', () => {
         }),
       );
 
-      await expect(service.createUser(data)).rejects.toBeInstanceOf(ConflictException);
+      await expect(service.createUser(data)).rejects.toBeInstanceOf(
+        ConflictException,
+      );
     });
 
     it('rethrows unknown errors', async () => {
@@ -71,6 +86,20 @@ describe('UsersService', () => {
       prisma.user.findUnique.mockResolvedValue(null);
 
       await expect(service.findByEmail('none@example.com')).resolves.toBeNull();
+    });
+  });
+
+  describe('findByEmailWithPasswordHash', () => {
+    it('looks up by email without a select, so passwordHash is included', async () => {
+      const user = { id: 1, email: 'john@example.com', passwordHash: 'hashed' };
+      prisma.user.findUnique.mockResolvedValue(user);
+
+      await expect(
+        service.findByEmailWithPasswordHash('john@example.com'),
+      ).resolves.toBe(user);
+      expect(prisma.user.findUnique).toHaveBeenCalledWith({
+        where: { email: 'john@example.com' },
+      });
     });
   });
 });

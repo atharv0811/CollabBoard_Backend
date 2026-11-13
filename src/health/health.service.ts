@@ -1,11 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class HealthService {
-    check(): { status: string, message: string } {
-        return {
-            status: 'ok',
-            message: 'CollabBoard API is running'
-        }
-    }
+  check(): { status: string; message: string } {
+    return {
+      status: 'ok',
+      message: 'CollabBoard API is running',
+    };
+  }
 }

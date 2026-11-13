@@ -15,7 +15,11 @@ describe('UsersController', () => {
   });
 
   it('POST /users goes through AuthService so the password is hashed', async () => {
-    const dto = { name: 'John', email: 'john@example.com', password: 'password123' };
+    const dto = {
+      name: 'John',
+      email: 'john@example.com',
+      password: 'password123',
+    };
     const user = { id: 1, name: 'John', email: 'john@example.com' };
     authService.registerUser.mockResolvedValue(user);
 
