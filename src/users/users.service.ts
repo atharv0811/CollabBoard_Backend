@@ -10,33 +10,23 @@ export type CreateUserData = {
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async findByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: { email },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        avatarUrl: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      omit: {
+        passwordHash: true
+      }
     });
   }
 
   async findById(id: string) {
     return this.prisma.user.findUnique({
       where: { id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        avatarUrl: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      omit: {
+        passwordHash: true
+      }
     });
   }
 

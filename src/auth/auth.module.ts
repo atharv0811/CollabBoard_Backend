@@ -22,4 +22,4 @@ import { SecurityModule } from '../security/security.module.js';
   controllers: [AuthController],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
