@@ -6,6 +6,7 @@ import { UsersService } from './users.service.js';
 import { type AuthenticatedRequest } from '../security/interfaces/authenticated-request.interface.js';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(
     @Inject(forwardRef(() => AuthService))
@@ -19,7 +20,6 @@ export class UsersController {
   }
 
   @Get('me')
-  @UseGuards(JwtAuthGuard)
   async getProfile(@Req() req: AuthenticatedRequest) {
     return this.usersService.findById(req.user?.sub)
   }

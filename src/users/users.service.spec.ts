@@ -71,14 +71,14 @@ describe('UsersService', () => {
   });
 
   describe('findByEmail', () => {
-    it('looks up by email and selects only safe fields', async () => {
+    it('looks up by email and omits passwordHash', async () => {
       const user = { id: 1, email: 'john@example.com' };
       prisma.user.findUnique.mockResolvedValue(user);
 
       await expect(service.findByEmail('john@example.com')).resolves.toBe(user);
       expect(prisma.user.findUnique).toHaveBeenCalledWith({
         where: { email: 'john@example.com' },
-        select: safeSelect,
+        omit: { passwordHash: true },
       });
     });
 

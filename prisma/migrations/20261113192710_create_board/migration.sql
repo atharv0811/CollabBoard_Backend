@@ -1,0 +1,17 @@
+-- CreateTable
+CREATE TABLE "Board" (
+    "id" UUID NOT NULL,
+    "name" VARCHAR(80) NOT NULL,
+    "document" JSONB NOT NULL,
+    "ownerId" UUID NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Board_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE INDEX "Board_ownerId_idx" ON "Board"("ownerId");
+
+-- AddForeignKey
+ALTER TABLE "Board" ADD CONSTRAINT "Board_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
