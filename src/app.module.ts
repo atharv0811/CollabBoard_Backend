@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { SecurityModule } from './security/security.module.js';
 import { BoardsModule } from './boards/boards.module.js';
+import { UploadsModule } from './uploads/uploads.module.js';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BoardsModule } from './boards/boards.module.js';
     AuthModule,
     SecurityModule,
     BoardsModule,
+    UploadsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
